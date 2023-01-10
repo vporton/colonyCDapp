@@ -1,3 +1,4 @@
+import { utils } from 'ethers';
 import React, {
   createContext,
   useState,
@@ -11,12 +12,12 @@ import {
   GetCurrentUserQuery,
   GetCurrentUserQueryVariables,
 } from '~gql';
-import { Wallet, User } from '~types';
+import { ColonyWallet, User } from '~types';
 
 import { getContext, ContextModule } from './index';
 
 export interface AppContextValues {
-  wallet?: Wallet;
+  wallet?: ColonyWallet | null;
   walletConnecting?: boolean;
   setWalletConnecting?: React.Dispatch<React.SetStateAction<boolean>>;
   user?: User | null;
@@ -31,7 +32,7 @@ export interface AppContextValues {
 export const AppContext = createContext<AppContextValues>({});
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  let initialWallet;
+  let initialWallet: ColonyWallet | undefined;
 
   /*
    * Wallet
@@ -43,7 +44,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     // It means that it was not set in context yet
   }
 
-  const [wallet, setWallet] = useState(initialWallet);
+  const [wallet, setWallet] =
+    useState<AppContextValues['wallet']>(initialWallet);
   const [user, setUser] = useState<User | null | undefined>();
   const [userLoading, setUserLoading] = useState(false);
   const [walletConnecting, setWalletConnecting] = useState(false);
@@ -61,7 +63,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
             GetCurrentUserQueryVariables
           >({
             query: GetCurrentUserDocument,
-            variables: { address },
+            variables: { address: utils.getAddress(address) },
             fetchPolicy: 'network-only',
           });
           const [currentUser] = data?.getUserByAddress?.items || [];
@@ -85,8 +87,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       const updatedWallet = getContext(ContextModule.Wallet);
       setWallet(updatedWallet);
       // Update the user as soon as the wallet address changes
-      if (updatedWallet?.address !== wallet?.address) {
-        updateUser(updatedWallet?.address);
+      if (updatedWallet.address !== wallet?.address) {
+        updateUser(updatedWallet.address);
       }
     } catch (error) {
       if (wallet) {

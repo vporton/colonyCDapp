@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest } from 'redux-saga/effects';
 // import { BigNumber } from 'ethers';
 import { utils } from 'ethers';
 import { QueryOptions } from '@apollo/client';
@@ -19,7 +19,7 @@ import {
   putError,
   // getColonyManager
 } from '../utils';
-import { getWallet } from '../wallet';
+import onboard from '../wallet/onboard';
 
 // import { transactionLoadRelated, transactionReady } from '../../actionCreators';
 // import {
@@ -92,8 +92,8 @@ function* usernameCreate({
   meta,
   payload: { username, email, emailPermissions },
 }: Action<ActionTypes.USERNAME_CREATE>) {
-  const wallet = yield call(getWallet);
-  const walletAddress = utils.getAddress(wallet?.address);
+  const wallet = getContext(ContextModule.Wallet);
+  const walletAddress = utils.getAddress(wallet.address);
 
   const apolloClient = getContext(ContextModule.ApolloClient);
 
@@ -150,11 +150,16 @@ function* usernameCreate({
   return null;
 }
 
+export const disconnectWallet = (walletLabel: string) => {
+  onboard.disconnectWallet({ label: walletLabel });
+  removeContext(ContextModule.Wallet);
+  clearLastWallet();
+};
+
 function* userLogout() {
   try {
-    removeContext(ContextModule.Wallet);
-    clearLastWallet();
-
+    const wallet = getContext(ContextModule.Wallet);
+    disconnectWallet(wallet.label);
     yield put<AllActions>({
       type: ActionTypes.USER_LOGOUT_SUCCESS,
     });

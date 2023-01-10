@@ -14,7 +14,8 @@ import {
 import { ActionTypes } from '~redux';
 import { groupedTransactionsAndMessages } from '~redux/selectors';
 import { useAppContext, useAsyncFunction, useMobile } from '~hooks';
-import { getLastWallet } from '~utils/autoLogin';
+import { clearLastWallet, getLastWallet } from '~utils/autoLogin';
+import { isBasicWallet } from '~types';
 
 import styles from './Wallet.css';
 
@@ -68,14 +69,14 @@ const Wallet = () => {
   );
 
   useLayoutEffect(() => {
-    if (!wallet && getLastWallet()) {
+    if ((!wallet && getLastWallet()) || isBasicWallet(wallet)) {
       handleConnectWallet();
     }
   }, [handleConnectWallet, wallet]);
 
   return (
     <>
-      {walletConnecting && (
+      {!wallet && walletConnecting && (
         <div className={styles.walletAutoLogin}>
           <MiniSpinnerLoader title={MSG.walletAutologin} />
         </div>
@@ -88,7 +89,10 @@ const Wallet = () => {
               : styles.connectWalletButton
           }
           text={MSG.connectWallet}
-          onClick={handleConnectWallet}
+          onClick={() => {
+            clearLastWallet();
+            handleConnectWallet();
+          }}
         />
       )}
       <span>

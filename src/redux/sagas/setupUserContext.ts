@@ -1,6 +1,9 @@
 import { all, call, fork, put } from 'redux-saga/effects';
 // import { formatEther } from 'ethers/lib/utils';
 
+import { setContext, ContextModule, UserSettings } from '~context';
+import { ColonyWallet } from '~types';
+
 // import actionsSagas from './actions';
 import { colonyCreateSaga } from './colony';
 // import colonySagas, {
@@ -10,18 +13,16 @@ import { colonyCreateSaga } from './colony';
 // import whitelistSagas from './whitelist';
 // import vestingSagas from './vesting';
 import { setupUsersSagas } from './users';
-import { getWallet } from './wallet';
 
 import { ActionTypes } from '../actionTypes';
 import { AllActions } from '../types/actions';
-
-import { setContext, ContextModule, UserSettings } from '~context';
 
 // import setupResolvers from '~context/setupResolvers';
 // import AppLoadingState from '~context/appLoadingState';
 
 import { getGasPrices, putError } from './utils';
 import setupOnBeforeUnload from './setupOnBeforeUnload';
+import setupWalletContext from './setupWalletContext';
 // import { setupUserBalanceListener } from './setupUserBalanceListener';
 
 function* setupContextDependentSagas() {
@@ -53,10 +54,7 @@ export default function* setupUserContext() {
     /*
      * Get the new wallet and set it in context.
      */
-    const wallet = yield call(getWallet);
-
-    setContext(ContextModule.Wallet, wallet);
-
+    const wallet: ColonyWallet | undefined = yield call(setupWalletContext);
     yield put<AllActions>({
       type: ActionTypes.WALLET_OPEN_SUCCESS,
     });
