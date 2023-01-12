@@ -27,7 +27,7 @@ const SubscribedColoniesList = () => {
   /* Ensures colony list is up-to-date post create colony flow. */
   useEffect(() => {
     if (updateUser) {
-      updateUser(user?.walletAddress);
+      updateUser(user?.walletAddress, true);
     }
   }, [user, updateUser]);
 
