@@ -8,6 +8,7 @@ import { UserActionTypes } from './user';
 import { MetacolonyVestingTypes } from './vesting';
 import { WalletActionTypes } from './wallet';
 import { DecisionActionTypes } from './decisions';
+import { NavigateFunction } from 'react-router';
 
 export { RootMotionOperationNames } from './motion';
 
@@ -114,8 +115,6 @@ export type ActionTypeString = AllActions['type'];
 
 export type TakeFilter = (action: AllActions) => boolean;
 
-export type MetaWithHistory<M> = {
-  history?: {
-    push: <A>(route: A) => void;
-  };
+export type MetaWithNavigate<M> = {
+  navigate?: NavigateFunction;
 } & M;

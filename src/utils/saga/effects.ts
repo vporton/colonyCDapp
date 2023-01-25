@@ -109,7 +109,7 @@ export const takeLatestCancellable = (
 
 export function* routeRedirect(
   route: string,
-  navigateFunction: NavigateFunction,
+  navigateFunction?: NavigateFunction,
   navigateOptions?: NavigateOptions,
 ) {
   if (route && navigateFunction) {

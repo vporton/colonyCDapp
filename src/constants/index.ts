@@ -164,3 +164,6 @@ export const GANACHE_LOCAL_RPC_URL = 'http://localhost:8545';
 export const isDev = process.env.NODE_ENV === 'development';
 
 export const LATEST_ONE_TX_PAYMENT_VERSION = 3; // @TODO: get progamatically instead of hard-coding
+
+/* This is the magic number used in the contract to identify the type of motion as a Decision */
+export const ACTION_DECISION_MOTION_CODE = '0x12345678';

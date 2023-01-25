@@ -6,7 +6,7 @@ import { useAsyncFunction, useMounted } from '~hooks';
 import DefaultButton from '~shared/Button';
 import { Props as DefaultButtonProps } from './Button';
 
-interface Props extends DefaultButtonProps {
+interface Props<V extends Record<string, any>> extends DefaultButtonProps {
   button?: ElementType;
   confirmText?: any;
   error: string;
@@ -16,10 +16,10 @@ interface Props extends DefaultButtonProps {
   success: string;
   text?: MessageDescriptor | string;
   transform?: ActionTransformFnType;
-  values?: any | (() => any | Promise<any>);
+  values?: V | (() => V | Promise<V>);
 }
 
-const ActionButton = ({
+const ActionButton = <V extends Record<string, any>>({
   button,
   error,
   submit,
@@ -29,7 +29,7 @@ const ActionButton = ({
   values,
   transform,
   ...props
-}: Props) => {
+}: Props<V>) => {
   const isMountedRef = useMounted();
   const [loading, setLoading] = useState(false);
   const asyncFunction = useAsyncFunction({ submit, error, success, transform });
@@ -39,7 +39,7 @@ const ActionButton = ({
     setLoading(true);
     try {
       const asyncFuncValues =
-        typeof values == 'function' ? await values() : values;
+        typeof values === 'function' ? await values() : values;
       result = await asyncFunction(asyncFuncValues);
       if (isMountedRef.current) setLoading(false);
     } catch (err) {

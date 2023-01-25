@@ -2,14 +2,14 @@ import { BigNumber } from 'ethers';
 import { ColonyRole } from '@colony/colony-js';
 
 import { ActionTypes } from '../../actionTypes';
-import { Address, Color } from '~types';
+import { Address, Color, Decision } from '~types';
 
 import {
   ErrorActionType,
   UniqueActionType,
   UniqueActionTypeWithoutPayload,
   ActionTypeWithMeta,
-  MetaWithHistory,
+  MetaWithNavigate,
 } from './index';
 
 export enum RootMotionOperationNames {
@@ -29,12 +29,12 @@ export type MotionActionTypes =
         amount: BigNumber;
         annotationMessage?: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_STAKE_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_STAKE_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_VOTE,
@@ -44,10 +44,13 @@ export type MotionActionTypes =
         motionId: BigNumber;
         vote: number;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_VOTE_ERROR, object>
-  | ActionTypeWithMeta<ActionTypes.MOTION_VOTE_SUCCESS, MetaWithHistory<object>>
+  | ActionTypeWithMeta<
+      ActionTypes.MOTION_VOTE_SUCCESS,
+      MetaWithNavigate<object>
+    >
   | UniqueActionType<
       ActionTypes.MOTION_REVEAL_VOTE,
       {
@@ -55,12 +58,12 @@ export type MotionActionTypes =
         colonyAddress: Address;
         motionId: BigNumber;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_REVEAL_VOTE_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_REVEAL_VOTE_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_FINALIZE,
@@ -69,12 +72,12 @@ export type MotionActionTypes =
         colonyAddress: Address;
         motionId: BigNumber;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_FINALIZE_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_FINALIZE_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_CLAIM,
@@ -83,12 +86,12 @@ export type MotionActionTypes =
         colonyAddress: Address;
         motionIds: Array<BigNumber>;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_CLAIM_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_CLAIM_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_DOMAIN_CREATE_EDIT,
@@ -104,12 +107,12 @@ export type MotionActionTypes =
         isCreateDomain: boolean;
         motionDomainId: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_DOMAIN_CREATE_EDIT_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_DOMAIN_CREATE_EDIT_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_EXPENDITURE_PAYMENT,
@@ -126,12 +129,12 @@ export type MotionActionTypes =
         annotationMessage?: string;
         motionDomainId: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_EXPENDITURE_PAYMENT_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_EXPENDITURE_PAYMENT_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_EDIT_COLONY,
@@ -148,12 +151,12 @@ export type MotionActionTypes =
          * @TODO I think this will also store the subscribed-to tokens list
          */
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_EDIT_COLONY_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_EDIT_COLONY_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_MOVE_FUNDS,
@@ -167,12 +170,12 @@ export type MotionActionTypes =
         amount: BigNumber;
         annotationMessage?: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_MOVE_FUNDS_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_MOVE_FUNDS_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.ROOT_MOTION,
@@ -183,10 +186,13 @@ export type MotionActionTypes =
         motionParams: [BigNumber] | [string];
         annotationMessage?: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.ROOT_MOTION_ERROR, object>
-  | ActionTypeWithMeta<ActionTypes.ROOT_MOTION_SUCCESS, MetaWithHistory<object>>
+  | ActionTypeWithMeta<
+      ActionTypes.ROOT_MOTION_SUCCESS,
+      MetaWithNavigate<object>
+    >
   | UniqueActionType<
       ActionTypes.MOTION_USER_ROLES_SET,
       {
@@ -198,12 +204,12 @@ export type MotionActionTypes =
         annotationMessage?: string;
         motionDomainId: string;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_USER_ROLES_SET_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_USER_ROLES_SET_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_STATE_UPDATE,
@@ -226,12 +232,12 @@ export type MotionActionTypes =
         colonyAddress: Address;
         motionId: BigNumber;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_ESCALATE_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_ESCALATE_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_MANAGE_REPUTATION,
@@ -245,26 +251,24 @@ export type MotionActionTypes =
         annotationMessage?: string;
         isSmitingReputation?: boolean;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_MANAGE_REPUTATION_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_MANAGE_REPUTATION_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | UniqueActionType<
       ActionTypes.MOTION_CREATE_DECISION,
       {
-        colonyAddress: Address;
-        colonyName: string;
-        decisionTitle: string;
-        decisionDescription: string;
-        motionDomainId: number;
+        colonyAddress?: Address;
+        colonyName?: string;
+        decision: Decision;
       },
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >
   | ErrorActionType<ActionTypes.MOTION_CREATE_DECISION_ERROR, object>
   | ActionTypeWithMeta<
       ActionTypes.MOTION_CREATE_DECISION_SUCCESS,
-      MetaWithHistory<object>
+      MetaWithNavigate<object>
     >;

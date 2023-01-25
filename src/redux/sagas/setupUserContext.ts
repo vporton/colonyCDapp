@@ -6,7 +6,7 @@ import { colonyCreateSaga } from './colony';
 // import colonySagas, {
 // } from './colony';
 // import colonyExtensionSagas from './extensions';
-// import motionSagas from './motions';
+import motionSagas from './motions';
 // import whitelistSagas from './whitelist';
 // import vestingSagas from './vesting';
 import { setupUsersSagas } from './users';
@@ -32,7 +32,7 @@ function* setupContextDependentSagas() {
     // call(colonySagas),
     call(colonyCreateSaga),
     // call(colonyExtensionSagas),
-    // call(motionSagas),
+    call(motionSagas),
     // call(whitelistSagas),
     // call(vestingSagas),
     call(setupUsersSagas),

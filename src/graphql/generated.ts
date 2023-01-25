@@ -1408,7 +1408,7 @@ export enum TokenType {
 }
 
 export type UpdateColonyInput = {
-  colonyNativeTokenId?: InputMaybe<Scalars['ID']>;
+  colonyNativeTokenId: Scalars['ID'];
   id: Scalars['ID'];
   meta?: InputMaybe<MetadataInput>;
   name?: InputMaybe<Scalars['String']>;

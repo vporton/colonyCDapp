@@ -1,4 +1,5 @@
 import { TransactionReceipt } from '@ethersproject/providers';
+import { eventChannel } from 'redux-saga';
 
 import { TransactionError, TransactionType } from '~redux/immutable';
 import { MethodParams } from '~types';
@@ -88,3 +89,5 @@ export type TransactionActionTypes =
       Meta
     >
   | ActionTypeWithMeta<ActionTypes.TRANSACTION_RETRY, Meta>;
+
+export type TransactionChannel = ReturnType<typeof eventChannel>;

@@ -1,17 +1,20 @@
 import React from 'react';
-// import { defineMessages } from 'react-intl';
 
 import { DecisionDialog, DeleteDecisionDialog } from '~common/ColonyDecisions';
 import { useDialog } from '~shared/Dialog';
 import Button, { ActionButton } from '~shared/Button';
 import { useColonyContext } from '~hooks';
-import { ActionTypes } from '~redux';
+import { Action, ActionTypes } from '~redux';
 
 import { DecisionDataProps } from '../DecisionData';
 
 import styles from './DecisionPreviewControls.css';
+import { Decision } from '~types';
 
 type DecisionPreviewControlsProps = Omit<DecisionDataProps, 'user'>;
+
+type CreateDecisionActionValues =
+  Action<ActionTypes.MOTION_CREATE_DECISION>['payload'];
 
 const displayName =
   'common.ColonyDecisions.DecisionPreview.DecisionPreviewControls';
@@ -46,16 +49,15 @@ const DecisionPreviewControls = ({
           />
         </>
       )}
-      <ActionButton
+      <ActionButton<CreateDecisionActionValues>
         submit={ActionTypes.MOTION_CREATE_DECISION}
         error={ActionTypes.MOTION_CREATE_DECISION_ERROR}
         success={ActionTypes.MOTION_CREATE_DECISION_SUCCESS}
         values={{
           colonyAddress,
           colonyName: colony?.name,
-          decisionTitle: decision?.title,
-          decisionDescription: decision?.description,
-          motionDomainId: decision?.motionDomainId,
+          // btn disabled if decision is undefined
+          decision: decision as Decision,
         }}
         appearance={{ theme: 'primary', size: 'large' }}
         text={{ id: 'button.publish' }}
