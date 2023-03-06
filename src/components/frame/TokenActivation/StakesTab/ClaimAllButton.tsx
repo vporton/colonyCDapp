@@ -4,7 +4,7 @@ import { defineMessages } from 'react-intl';
 
 import Button from '~shared/Button';
 import { ActionHookForm as ActionForm } from '~shared/Fields';
-import { MotionStakedEvent } from './types';
+import { ParsedMotionStakedEvent } from '~gql';
 import { ActionTypes } from '~redux/actionTypes';
 import { Address } from '~types/index';
 import { mapPayload } from '~utils/actions';
@@ -19,7 +19,7 @@ const MSG = defineMessages({
 });
 
 interface Props {
-  unclaimedMotionStakeEvents: MotionStakedEvent[];
+  unclaimedMotionStakeEvents: ParsedMotionStakedEvent[];
   colonyAddress: Address;
   userAddress: Address;
   setIsPopoverOpen: Dispatch<SetStateAction<boolean>>;
