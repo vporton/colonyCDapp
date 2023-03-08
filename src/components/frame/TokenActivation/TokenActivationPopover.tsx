@@ -1,7 +1,7 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useMemo, useContext } from 'react';
 
 import Popover, { PopoverChildFn } from '~shared/Popover';
-import { useTokenActivationContext } from '~hooks';
+import { TokenActivationContext } from '~shared/TokenActivationProvider';
 import { removeValueUnits } from '~utils/css';
 
 import TokenActivationContent from './TokenActivationContent';
@@ -16,7 +16,7 @@ interface Props extends TokensTabProps {
 const { verticalOffset } = styles;
 
 const TokenActivationPopover = ({ children, ...otherProps }: Props) => {
-  const { isOpen, setIsOpen } = useTokenActivationContext();
+  const { isOpen, setIsOpen } = useContext(TokenActivationContext);
 
   /*
    * @NOTE Offset Calculations
