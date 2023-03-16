@@ -27,7 +27,7 @@ input ProfileMetadataInput {
   emailPermissions: [String!]!
 }
 
-input ChainMetadataInput {
+input MetadataInput {
   network: Network
   chainId: Int
   transactionHash: String
@@ -50,9 +50,10 @@ input CreateUniqueColonyInput {
   id: ID!
   name: String!
   colonyNativeTokenId: ID!
+  profile: ProfileInput
   type: ColonyType
   status: ColonyStatusInput
-  chainMetadata: ChainMetadataInput
+  meta: MetadataInput
   version: Int!
 }
 
@@ -189,6 +190,8 @@ type Mutation {
   ): ColonyExtension @function(name: "updateExtensionByColonyAndHash")
 }
 
+# Applies to both Users and Colonies
+# Might need to separate it into two later down the line
 type Profile @model {
   id: ID!
   avatar: String
@@ -214,7 +217,7 @@ type ColonyStatus {
 
 # Applies to both Colonies Tokens and Events, but not all fields are revlant to all
 # It does not apply to user accounts as they can live on all networks
-type ChainMetadata {
+type Metadata {
   network: Network
   chainId: Int
   transactionHash: String
@@ -238,7 +241,7 @@ type Token @model {
   users: [User] @manyToMany(relationName: "UserTokens")
   avatar: String
   thumbnail: String
-  chainMetadata: ChainMetadata
+  meta: Metadata
   createdAt: AWSDateTime!
 }
 
@@ -247,10 +250,12 @@ type ColonyID {
 }
 
 type Colony @model {
-  id: ID! @index(name: "byAddress", queryField: "getColonyByAddress") # colony contract address
+  id: ID! @index(name: "byAddress", queryField: "getColonyByAddress") # contract address
   name: String! @index(name: "byName", queryField: "getColonyByName")
   nativeToken: Token! @hasOne
   tokens: [Token] @manyToMany(relationName: "ColonyTokens")
+  profileId: ID
+  profile: Profile @hasOne(fields: ["profileId"])
   status: ColonyStatus
   domains: [Domain] @hasMany(indexName: "byColony", fields: ["id"])
   watchers: [User] @manyToMany(relationName: "WatchedColonies") # colony subscriptions
@@ -266,26 +271,10 @@ type Colony @model {
   type: ColonyType @index(name: "byType", queryField: "getColonyByType")
   # Returns a list token balances for each domain and each token that the colony has
   balances: ColonyBalances @function(name: "fetchColonyBalances")
-  chainMetadata: ChainMetadata
+  meta: Metadata
   extensions: [ColonyExtension!] @hasMany(indexName: "byColony", fields: ["id"])
   version: Int!
   actions: [ColonyAction] @hasMany
-  metadata: ColonyMetadata @hasOne(fields: ["id"])
-}
-
-type ColonyMetadata @model {
-  id: ID! # colony contract address
-  displayName: String!
-  avatar: String
-  thumbnail: String
-  changelog: [ColonyMetadataChangelog!]
-}
-
-type ColonyMetadataChangelog {
-  transactionHash: String!
-  oldDisplayName: String!
-  newDisplayName: String!
-  hasAvatarChanged: Boolean!
 }
 
 type User @model {
@@ -380,7 +369,7 @@ type ContractEvent @model {
   # update this schema every time you want to start tracking a new event
   name: String!
   signature: String!
-  chainMetadata: ChainMetadata!
+  meta: Metadata!
   # Note that they are not required, meaning that at any point, one or more, even
   # all of them might not be set
   colony: Colony @hasOne
@@ -444,5 +433,4 @@ type ColonyAction @model {
   toDomainId: ID
   toDomain: Domain @hasOne(fields: ["toDomainId"])
   fundamentalChainId: Int
-  newColonyVersion: Int
 }
