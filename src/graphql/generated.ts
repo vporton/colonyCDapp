@@ -33,47 +33,74 @@ export type Scalars = {
   AWSURL: string;
 };
 
+/** Represents metadata related to a blockchain event. */
 export type ChainMetadata = {
   __typename?: 'ChainMetadata';
+  /** The block number of the event. */
   blockNumber?: Maybe<Scalars['Int']>;
+  /** The chain ID of the event. */
   chainId?: Maybe<Scalars['Int']>;
+  /** The log index of the event. */
   logIndex?: Maybe<Scalars['Int']>;
+  /** The network the event occurred on. */
   network?: Maybe<Network>;
+  /** The transaction hash of the event. */
   transactionHash?: Maybe<Scalars['String']>;
 };
 
+/**
+ * Input data for relevant chain metadata of a Colony.
+ * ??? I would like to explain why we need this but maybe that's too much info ???
+ */
 export type ChainMetadataInput = {
+  /** The block number of the creation transaction. */
   blockNumber?: InputMaybe<Scalars['Int']>;
+  /** The chain ID of the network. */
   chainId?: InputMaybe<Scalars['Int']>;
+  /** The log index of the creation transaction. */
   logIndex?: InputMaybe<Scalars['Int']>;
+  /** The network the Colony is deployed on. */
   network?: InputMaybe<Network>;
+  /** The transaction hash of the creation transaction. */
   transactionHash?: InputMaybe<Scalars['String']>;
 };
 
+/** Represents a Colony within the Colony Network. */
 export type Colony = {
   __typename?: 'Colony';
   actions?: Maybe<ModelColonyActionConnection>;
+  /** List of token balances for each domain and each token that the Colony has. */
   balances?: Maybe<ColonyBalances>;
+  /** List of native chain token claims (e.g., Token 0x0000...0000: ETH, xDAI, etc.). */
   chainFundsClaim?: Maybe<ColonyChainFundsClaim>;
+  /** Metadata related to the chain of the Colony. */
   chainMetadata?: Maybe<ChainMetadata>;
   colonyNativeTokenId: Scalars['ID'];
   createdAt: Scalars['AWSDateTime'];
   domains?: Maybe<ModelDomainConnection>;
   extensions?: Maybe<ModelColonyExtensionConnection>;
   fundsClaims?: Maybe<ModelColonyFundsClaimConnection>;
+  /** Unique identifier for the Colony (contract address). */
   id: Scalars['ID'];
+  /** Metadata of the Colony. */
   metadata?: Maybe<ColonyMetadata>;
+  /** (Short) name of the Colony. */
   name: Scalars['String'];
+  /** The native token of the Colony. */
   nativeToken: Token;
+  /** Status information for the Colony. */
   status?: Maybe<ColonyStatus>;
   tokens?: Maybe<ModelColonyTokensConnection>;
+  /** Type of the Colony (Regular or Metacolony). */
   type?: Maybe<ColonyType>;
   updatedAt: Scalars['AWSDateTime'];
+  /** Version of the Colony. */
   version: Scalars['Int'];
   watchers?: Maybe<ModelWatchedColoniesConnection>;
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyActionsArgs = {
   filter?: InputMaybe<ModelColonyActionFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -82,6 +109,7 @@ export type ColonyActionsArgs = {
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyDomainsArgs = {
   filter?: InputMaybe<ModelDomainFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -90,6 +118,7 @@ export type ColonyDomainsArgs = {
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyExtensionsArgs = {
   filter?: InputMaybe<ModelColonyExtensionFilterInput>;
   hash?: InputMaybe<ModelStringKeyConditionInput>;
@@ -99,6 +128,7 @@ export type ColonyExtensionsArgs = {
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyFundsClaimsArgs = {
   filter?: InputMaybe<ModelColonyFundsClaimFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -107,6 +137,7 @@ export type ColonyFundsClaimsArgs = {
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyTokensArgs = {
   filter?: InputMaybe<ModelColonyTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -115,6 +146,7 @@ export type ColonyTokensArgs = {
 };
 
 
+/** Represents a Colony within the Colony Network. */
 export type ColonyWatchersArgs = {
   filter?: InputMaybe<ModelWatchedColoniesFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -122,55 +154,104 @@ export type ColonyWatchersArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
+/** Represents an action performed within a Colony. */
 export type ColonyAction = {
   __typename?: 'ColonyAction';
+  /** The amount involved in the action, if applicable. */
   amount?: Maybe<Scalars['String']>;
+  /** The block number where the action was recorded. */
   blockNumber: Scalars['Int'];
+  /** The Colony that the action belongs to. */
   colony: Colony;
   colonyActionsId?: Maybe<Scalars['ID']>;
+  /** The identifier of the Colony that the action belongs to. */
   colonyId: Scalars['ID'];
+  /** The timestamp when the action was created. */
   createdAt: Scalars['AWSDateTime'];
+  /** The source Domain of the action, if applicable. */
   fromDomain?: Maybe<Domain>;
+  /** The source Domain identifier, if applicable. */
   fromDomainId?: Maybe<Scalars['ID']>;
+  /**  ??? Not sure what this is ??? */
   fundamentalChainId?: Maybe<Scalars['Int']>;
+  /** Unique identifier for the ColonyAction. */
   id: Scalars['ID'];
+  /** The Ethereum address of the action initiator. Can be a user, extension or colony. */
   initiatorAddress?: Maybe<Scalars['ID']>;
+  /** The Colony that initiated the action, if applicable. */
   initiatorColony?: Maybe<Colony>;
+  /** The ColonyExtension that initiated the action, if applicable. */
   initiatorExtension?: Maybe<ColonyExtension>;
+  /** The User who initiated the action, if applicable. */
   initiatorUser?: Maybe<User>;
+  /** The resulting new Colony version, if applicable. */
   newColonyVersion?: Maybe<Scalars['Int']>;
+  /** The User who received the action, if applicable. */
   recipient?: Maybe<User>;
+  /** The Ethereum address of the action recipient, if applicable. */
   recipientAddress?: Maybe<Scalars['ID']>;
+  /** The target Domain of the action, if applicable. */
   toDomain?: Maybe<Domain>;
+  /** The target Domain identifier, if applicable. */
   toDomainId?: Maybe<Scalars['ID']>;
+  /** The Token involved in the action, if applicable. */
   token?: Maybe<Token>;
+  /** The Ethereum address of the token involved in the action, if applicable. */
   tokenAddress?: Maybe<Scalars['ID']>;
+  /** The type of action performed. */
   type: ColonyActionType;
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/**
+ * Variants of Colony Network blockchain events.
+ *
+ * These can all happen in a Colony and will be interpreted by the dApp according to their types.
+ */
 export enum ColonyActionType {
+  /** An action related to editing a Colony's details. */
   ColonyEdit = 'COLONY_EDIT',
+  /** An action related to creating a domain within a Colony. */
   CreateDomain = 'CREATE_DOMAIN',
+  /** An action related to editing a domain's details. */
   EditDomain = 'EDIT_DOMAIN',
+  /** An action related to a domain reputation penalty within a Colony (smite). */
   EmitDomainReputationPenalty = 'EMIT_DOMAIN_REPUTATION_PENALTY',
+  /** An action related to a domain reputation reward within a Colony. */
   EmitDomainReputationReward = 'EMIT_DOMAIN_REPUTATION_REWARD',
+  /** A generic or unspecified Colony action. */
   Generic = 'GENERIC',
+  /** An action related to minting tokens within a Colony. */
   MintTokens = 'MINT_TOKENS',
+  /** An action related to moving funds between domains. */
   MoveFunds = 'MOVE_FUNDS',
+  /** An action related to a payment within a Colony. */
   Payment = 'PAYMENT',
+  /** An action related to the recovery functionality of a Colony. */
   Recovery = 'RECOVERY',
+  /** An action related to setting user roles within a Colony. */
   SetUserRoles = 'SET_USER_ROLES',
+  /** An action related to unlocking a token within a Colony. */
   UnlockToken = 'UNLOCK_TOKEN',
+  /** An action related to upgrading a Colony's version. */
   VersionUpgrade = 'VERSION_UPGRADE',
+  /**  ???  */
   WrongColony = 'WRONG_COLONY'
 }
 
+/** Represents a Colony balance for a specific domain and token. */
 export type ColonyBalance = {
   __typename?: 'ColonyBalance';
+  /** Balance of the specific token in the domain. */
   balance: Scalars['String'];
+  /** Domain associated with the Colony Balance. */
   domain: Domain;
+  /** Unique identifier for the Colony Balance. ??? Is this the colony address as well? ??? */
   id: Scalars['ID'];
+  /**
+   * Token associated with the Colony Balance.
+   * Note that for the chain native token, name and symbol are empty.
+   */
   token: Token;
 };
 
@@ -181,8 +262,10 @@ export type ColonyBalanceInput = {
   token: TokenInput;
 };
 
+/** Represents a collection of Colony balances. */
 export type ColonyBalances = {
   __typename?: 'ColonyBalances';
+  /** List of Colony balances. */
   items?: Maybe<Array<Maybe<ColonyBalance>>>;
 };
 
@@ -190,12 +273,22 @@ export type ColonyBalancesInput = {
   items?: InputMaybe<Array<InputMaybe<ColonyBalanceInput>>>;
 };
 
+/**
+ * Represents a native Colony Chain Funds Claim
+ *
+ * E.g., Token 0x0000...0000: ETH, xDAI, etc.
+ */
 export type ColonyChainFundsClaim = {
   __typename?: 'ColonyChainFundsClaim';
+  /** Amount claimed in the Colony Chain Funds Claim. */
   amount: Scalars['String'];
+  /** Timestamp when the Chain Funds Claim was created. */
   createdAt: Scalars['AWSDateTime'];
+  /** Block number when the Chain Funds Claim was created. */
   createdAtBlock: Scalars['Int'];
+  /** Unique identifier for the Colony Chain Funds Claim. */
   id: Scalars['ID'];
+  /** Timestamp when the Chain Funds Claim was last updated. */
   updatedAt: Scalars['AWSDateTime'];
 };
 
@@ -207,55 +300,89 @@ export type ColonyChainFundsClaimInput = {
   updatedAt?: InputMaybe<Scalars['AWSDateTime']>;
 };
 
+/** Represents a single extension installed on a Colony. */
 export type ColonyExtension = {
   __typename?: 'ColonyExtension';
+  /** The Colony that the extension belongs to. */
   colony: Colony;
+  /** The identifier of the Colony that the extension belongs to (the Colony's address) */
   colonyId: Scalars['ID'];
   createdAt: Scalars['AWSDateTime'];
+  /**
+   * The unique hash of the extension.
+   *
+   * The hash is generated like so: `keccak256(toUtf8Bytes(extensionName))`, where `extensionName` is the name of the extension contract file in the Colony Network
+   */
   hash: Scalars['String'];
+  /** Unique identifier for the ColonyExtension. */
   id: Scalars['ID'];
+  /** The timestamp when the extension was installed. */
   installedAt: Scalars['AWSTimestamp'];
+  /** The address of the user who installed the extension. */
   installedBy: Scalars['String'];
+  /** Indicates whether the extension has been removed. */
   isDeleted: Scalars['Boolean'];
+  /** Indicates whether the extension is deprecated. */
   isDeprecated: Scalars['Boolean'];
+  /** Indicates whether the extension has been initialized. */
   isInitialized: Scalars['Boolean'];
   updatedAt: Scalars['AWSDateTime'];
+  /** The version number of the extension. */
   version: Scalars['Int'];
 };
 
+/** Represents a Colony Funds Claim for all ERC20 tokens (except native chain tokens) */
 export type ColonyFundsClaim = {
   __typename?: 'ColonyFundsClaim';
+  /** Amount claimed in the Colony Funds Claim. */
   amount: Scalars['String'];
   colonyFundsClaimTokenId: Scalars['ID'];
   colonyFundsClaimsId?: Maybe<Scalars['ID']>;
+  /** Timestamp when the Funds Claim was created. */
   createdAt: Scalars['AWSDateTime'];
+  /** Block number when the Funds Claim was created. */
   createdAtBlock: Scalars['Int'];
+  /** Unique identifier for the Colony Funds Claim. */
   id: Scalars['ID'];
+  /** Token associated with the Colony Funds Claim. */
   token: Token;
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/** ??? I'm not really sure what this is */
 export type ColonyId = {
   __typename?: 'ColonyID';
+  /** Unique identifier for the Colony. */
   id: Scalars['ID'];
 };
 
+/** Represents metadata for a Colony. */
 export type ColonyMetadata = {
   __typename?: 'ColonyMetadata';
+  /** URL of the Colony's avatar image. */
   avatar?: Maybe<Scalars['String']>;
+  /** List of Colony metadata changelog entries. */
   changelog?: Maybe<Array<ColonyMetadataChangelog>>;
   createdAt: Scalars['AWSDateTime'];
+  /** Display name of the Colony. */
   displayName: Scalars['String'];
+  /** Unique identifier for the Colony (contract address). */
   id: Scalars['ID'];
+  /** URL of the Colony's thumbnail image. */
   thumbnail?: Maybe<Scalars['String']>;
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/** Represents a changelog entry for Colony metadata. */
 export type ColonyMetadataChangelog = {
   __typename?: 'ColonyMetadataChangelog';
+  /** Indicates whether the avatar has changed. */
   hasAvatarChanged: Scalars['Boolean'];
+  /** Display name of the Colony after the change. */
   newDisplayName: Scalars['String'];
+  /** Display name of the Colony before the change. */
   oldDisplayName: Scalars['String'];
+  /** Transaction hash associated with the changelog entry. */
   transactionHash: Scalars['String'];
 };
 
@@ -266,14 +393,28 @@ export type ColonyMetadataChangelogInput = {
   transactionHash: Scalars['String'];
 };
 
+/**
+ * Represents the status of a Colony.
+ *
+ * This contains important meta information about the Colony's token and other fundamental settings
+ */
 export type ColonyStatus = {
   __typename?: 'ColonyStatus';
+  /** Status information for the Colony's native token. */
   nativeToken?: Maybe<NativeTokenStatus>;
+  /** Whether the Colony is in recovery mode. */
   recovery?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * Input data for a Colony's status information.
+ *
+ * This is set when a Colony is created and can be changed later.
+ */
 export type ColonyStatusInput = {
+  /** Status information for the Colony's native token. */
   nativeToken?: InputMaybe<NativeTokenStatusInput>;
+  /** Whether the Colony is in recovery mode. */
   recovery?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -288,36 +429,59 @@ export type ColonyTokens = {
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/** Variants of Colony types. */
 export enum ColonyType {
+  /** A regular Colony. */
   Colony = 'COLONY',
+  /** The MetaColony, which governs the entire Colony Network. */
   Metacolony = 'METACOLONY'
 }
 
+/** Represents an event triggered by a smart contract within the Colony Network. */
 export type ContractEvent = {
   __typename?: 'ContractEvent';
+  /** Address of the agent who initiated the event. */
   agent: Scalars['String'];
+  /** Metadata associated with the event's chain. */
   chainMetadata: ChainMetadata;
+  /** Optional association with a Colony. */
   colony?: Maybe<Colony>;
   contractEventColonyId?: Maybe<Scalars['ID']>;
   contractEventDomainId?: Maybe<Scalars['ID']>;
   contractEventTokenId?: Maybe<Scalars['ID']>;
   contractEventUserId?: Maybe<Scalars['ID']>;
   createdAt: Scalars['AWSDateTime'];
+  /** Optional association with a Domain. */
   domain?: Maybe<Domain>;
+  /** Optional encoded arguments as a JSON string. */
   encodedArguments?: Maybe<Scalars['String']>;
+  /** Unique identifier for the Contract Event, in the format chainID_transactionHash_logIndex. */
   id: Scalars['ID'];
+  /** Name of the event. */
   name: Scalars['String'];
+  /** The unique signature of the event. */
   signature: Scalars['String'];
+  /** Address of the target contract on the receiving end of the event. */
   target: Scalars['String'];
+  /** Optional association with a Token. */
   token?: Maybe<Token>;
   updatedAt: Scalars['AWSDateTime'];
+  /** Optional association with a User. */
   user?: Maybe<User>;
 };
 
+/**
+ * Represents a contributor within the Colony Network.
+ *
+ * A contributor is a Colony member who has reputation.
+ */
 export type Contributor = {
   __typename?: 'Contributor';
+  /** Reputation amount of the contributor (as an absolute number). */
   reputationAmount?: Maybe<Scalars['String']>;
+  /** Reputation percentage of the contributor (of all reputation within the Colony). */
   reputationPercentage?: Maybe<Scalars['String']>;
+  /** User data associated with the contributor. */
   user?: Maybe<User>;
 };
 
@@ -446,19 +610,38 @@ export type CreateTokenInput = {
   type?: InputMaybe<TokenType>;
 };
 
+/**
+ * Input data for creating a unique Colony within the Colony Network.
+ *
+ * ??? I'm not really sure what unique means in this context, I would like to add an explanation here thought ???
+ */
 export type CreateUniqueColonyInput = {
+  /** Metadata related to the Colony's creation on the blockchain. */
   chainMetadata?: InputMaybe<ChainMetadataInput>;
+  /** Unique identifier for the Colony's native token. */
   colonyNativeTokenId: Scalars['ID'];
+  /** Unique identifier for the Colony. This is the Colony's contract address. */
   id: Scalars['ID'];
+  /** Display name of the Colony. */
   name: Scalars['String'];
+  /** Status information for the Colony. */
   status?: InputMaybe<ColonyStatusInput>;
+  /** Type of the Colony (regular or MetaColony). */
   type?: InputMaybe<ColonyType>;
+  /** Version of the currently deployed Colony contract. */
   version: Scalars['Int'];
 };
 
+/**
+ * Input data for creating a unique user within the Colony Network.
+ * ??? I'm not really sure what unique means in this context, I would like to add an explanation here thought ???
+ */
 export type CreateUniqueUserInput = {
+  /** Unique identifier for the user. This is the user's wallet address. */
   id: Scalars['ID'];
+  /** The username. */
   name: Scalars['String'];
+  /** Profile data for the user. */
   profile?: InputMaybe<ProfileInput>;
 };
 
@@ -480,12 +663,16 @@ export type CreateWatchedColoniesInput = {
   userID: Scalars['ID'];
 };
 
+/** Represents the current version of an entity in the system. */
 export type CurrentVersion = {
   __typename?: 'CurrentVersion';
   createdAt: Scalars['AWSDateTime'];
+  /** Unique identifier for the CurrentVersion. */
   id: Scalars['ID'];
+  /** The key used to look up the current version. */
   key: Scalars['String'];
   updatedAt: Scalars['AWSDateTime'];
+  /** The current version number. */
   version: Scalars['Int'];
 };
 
@@ -549,62 +736,124 @@ export type DeleteWatchedColoniesInput = {
   id: Scalars['ID'];
 };
 
+/** Represents a Domain within the Colony Network. */
 export type Domain = {
   __typename?: 'Domain';
+  /** Colony associated with the Domain. */
   colony: Colony;
+  /** Colony ID associated with the Domain. */
   colonyId: Scalars['ID'];
   createdAt: Scalars['AWSDateTime'];
+  /**
+   * Unique identifier for the Domain.
+   *
+   * This should be in the following format: `colonyAddress_nativeId`
+   * The native id is the auto-incrementing integer that is assigned to a domain from the contract on creation
+   */
   id: Scalars['ID'];
+  /** Indicates whether the Domain is the root domain (ID 1) */
   isRoot: Scalars['Boolean'];
+  /** Metadata of the Domain. */
   metadata?: Maybe<DomainMetadata>;
+  /**
+   * Native funding pot ID of the Domain.
+   *
+   * The native funding pot ID is assigned to a domain from the contract on creation
+   */
   nativeFundingPotId: Scalars['Int'];
+  /**
+   * Native ID of the Domain.
+   *
+   * The native id is the auto-incrementing integer that is assigned to a domain from the contract on creation
+   */
   nativeId: Scalars['Int'];
+  /**
+   * Native skill ID of the Domain.
+   *
+   * The native skill ID is assigned to a domain from the contract on creation
+   */
   nativeSkillId: Scalars['Int'];
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/** Variants of available domain colors as used in the dApp. */
 export enum DomainColor {
+  /** An aqua color. */
   Aqua = 'AQUA',
+  /** A black color. */
   Black = 'BLACK',
+  /** A blue color. */
   Blue = 'BLUE',
+  /** A blue-grey(ish) color. */
   BlueGrey = 'BLUE_GREY',
+  /** An emerald green color. */
   EmeraldGreen = 'EMERALD_GREEN',
+  /** A gold color. */
   Gold = 'GOLD',
+  /** A green color. */
   Green = 'GREEN',
+  /** A light pink color. */
   LightPink = 'LIGHT_PINK',
+  /** A magenta color. */
   Magenta = 'MAGENTA',
+  /** An orange color. */
   Orange = 'ORANGE',
+  /** A pale indigo color. */
   Periwinkle = 'PERIWINKLE',
+  /** A pink color. */
   Pink = 'PINK',
+  /** A purple color. */
   Purple = 'PURPLE',
+  /** A purple-grey(ish) color. */
   PurpleGrey = 'PURPLE_GREY',
+  /** A red color. */
   Red = 'RED',
+  /** A yellow color. */
   Yellow = 'YELLOW'
 }
 
+/** Input type for specifying a Domain. */
 export type DomainInput = {
+  /** Unique identifier for the Domain. */
   id: Scalars['ID'];
 };
 
+/** Represents metadata for a Domain. */
 export type DomainMetadata = {
   __typename?: 'DomainMetadata';
+  /** List of Domain metadata changelog entries. */
   changelog?: Maybe<Array<DomainMetadataChangelog>>;
+  /** Color associated with the Domain. */
   color: DomainColor;
   createdAt: Scalars['AWSDateTime'];
+  /** Description of the Domain. */
   description: Scalars['String'];
+  /**
+   * Unique identifier for the Domain metadata.
+   * This field is referenced by Domain id, so has to be in the same format: colonyAddress_nativeId
+   */
   id: Scalars['ID'];
+  /** Name of the Domain. */
   name: Scalars['String'];
   updatedAt: Scalars['AWSDateTime'];
 };
 
+/** Represents a changelog entry for Domain metadata. */
 export type DomainMetadataChangelog = {
   __typename?: 'DomainMetadataChangelog';
+  /** Color of the Domain after the change. */
   newColor: DomainColor;
+  /** Description of the Domain after the change. */
   newDescription: Scalars['String'];
+  /** Name of the Domain after the change. */
   newName: Scalars['String'];
+  /** Color of the Domain before the change. */
   oldColor: DomainColor;
+  /** Description of the Domain before the change. */
   oldDescription: Scalars['String'];
+  /** Name of the Domain before the change. */
   oldName: Scalars['String'];
+  /** Transaction hash associated with the changelog entry. */
   transactionHash: Scalars['String'];
 };
 
@@ -618,53 +867,94 @@ export type DomainMetadataChangelogInput = {
   transactionHash: Scalars['String'];
 };
 
+/** ??? Not really sure what this is. It's also not used anywhere ??? */
 export enum EmailPermissions {
+  /** Permission to identify the user as a human (??? as opposed to a contract ???). */
   IsHuman = 'isHuman',
+  /** Permission to send notifications to the user. */
   SendNotifications = 'sendNotifications'
 }
 
+/** Input data for retrieving a user's reputation within the top ??? domains of a Colony. */
 export type GetReputationForTopDomainsInput = {
+  /** The Ethereum address of the Colony. */
   colonyAddress: Scalars['String'];
+  /** The root hash of the reputation tree at a specific point in time. */
   rootHash?: InputMaybe<Scalars['String']>;
+  /** The Ethereum wallet address of the user. */
   walletAddress: Scalars['String'];
 };
 
+/** A return type that contains an array of UserDomainReputation items. */
 export type GetReputationForTopDomainsReturn = {
   __typename?: 'GetReputationForTopDomainsReturn';
+  /** An array of UserDomainReputation items. */
   items?: Maybe<Array<UserDomainReputation>>;
 };
 
+/**
+ * Input data for a user's reputation within a Domain in a Colony. If no `domainId` is passed, the Root Domain is used.
+ * A `rootHash` can be provided, to get reputation at a certain point in the past.
+ */
 export type GetUserReputationInput = {
+  /** The Ethereum address of the Colony. */
   colonyAddress: Scalars['String'];
+  /** The ID of the Domain within the Colony. If not provided, defaults to the Root Domain. */
   domainId?: InputMaybe<Scalars['Int']>;
+  /** The root hash of the reputation tree at a specific point in time. */
   rootHash?: InputMaybe<Scalars['String']>;
+  /** The Ethereum wallet address of the user. */
   walletAddress: Scalars['String'];
 };
 
+/** Input data for retrieving a user's token balance for a specific token. */
 export type GetUserTokenBalanceInput = {
+  /** The Ethereum address of the token. */
   tokenAddress: Scalars['String'];
+  /** The Ethereum wallet address of the user. */
   walletAddress: Scalars['String'];
 };
 
+/** A return type representing the breakdown of a user's token balance. */
 export type GetUserTokenBalanceReturn = {
   __typename?: 'GetUserTokenBalanceReturn';
+  /** The active portion of the user's token balance. */
   activeBalance?: Maybe<Scalars['String']>;
+  /** The total token balance, including inactive, locked, and active ??? and pending ??? balances. */
   balance?: Maybe<Scalars['String']>;
+  /** The inactive portion of the user's token balance. */
   inactiveBalance?: Maybe<Scalars['String']>;
+  /** The locked portion of the user's token balance. */
   lockedBalance?: Maybe<Scalars['String']>;
+  /** The pending portion of the user's token balance. */
   pendingBalance?: Maybe<Scalars['String']>;
 };
 
+/** Input data for fetching the list of members for a specific Colony. */
 export type MembersForColonyInput = {
+  /** Address of the Colony. */
   colonyAddress: Scalars['String'];
+  /** ID of the domain within the Colony. */
   domainId?: InputMaybe<Scalars['Int']>;
+  /** Root hash for the reputation state. */
   rootHash?: InputMaybe<Scalars['String']>;
+  /** Sorting method to apply to the member list. */
   sortingMethod?: InputMaybe<SortingMethod>;
 };
 
+/**
+ * A return type representing the members of a Colony.
+ *
+ * Definitions:
+ * * Member = User watching a Colony, with or without reputation
+ * * Contributor = User watching a Colony WITH reputation
+ * * Watcher = User watching a Colony WITHOUT reputation
+ */
 export type MembersForColonyReturn = {
   __typename?: 'MembersForColonyReturn';
+  /** User watching a Colony WITH reputation */
   contributors?: Maybe<Array<Contributor>>;
+  /** User watching a Colony WITHOUT reputation */
   watchers?: Maybe<Array<Watcher>>;
 };
 
@@ -1437,6 +1727,7 @@ export type ModelWatchedColoniesFilterInput = {
   userID?: InputMaybe<ModelIdInput>;
 };
 
+/** Root mutation type. */
 export type Mutation = {
   __typename?: 'Mutation';
   createColony?: Maybe<Colony>;
@@ -1451,7 +1742,9 @@ export type Mutation = {
   createDomainMetadata?: Maybe<DomainMetadata>;
   createProfile?: Maybe<Profile>;
   createToken?: Maybe<Token>;
+  /** Create a unique Colony within the Colony Network. ??? Maybe explain why unique ??? */
   createUniqueColony?: Maybe<Colony>;
+  /** Create a unique user within the Colony Network. ??? Maybe explain why unique ??? */
   createUniqueUser?: Maybe<User>;
   createUser?: Maybe<User>;
   createUserTokens?: Maybe<UserTokens>;
@@ -1471,6 +1764,7 @@ export type Mutation = {
   deleteUser?: Maybe<User>;
   deleteUserTokens?: Maybe<UserTokens>;
   deleteWatchedColonies?: Maybe<WatchedColonies>;
+  /**  ??? I don't know what this is ???  */
   setCurrentVersion?: Maybe<Scalars['Boolean']>;
   updateColony?: Maybe<Colony>;
   updateColonyAction?: Maybe<ColonyAction>;
@@ -1482,6 +1776,11 @@ export type Mutation = {
   updateCurrentVersion?: Maybe<CurrentVersion>;
   updateDomain?: Maybe<Domain>;
   updateDomainMetadata?: Maybe<DomainMetadata>;
+  /**
+   * Update an extension's details for a specific Colony.
+   *
+   * The extension hash is generated like so: `keccak256(toUtf8Bytes(extensionName))`, where `extensionName` is the name of the extension contract file in the Colony Network (e.g. `VotingReputation`)
+   */
   updateExtensionByColonyAndHash?: Maybe<ColonyExtension>;
   updateProfile?: Maybe<Profile>;
   updateToken?: Maybe<Token>;
@@ -1491,352 +1790,448 @@ export type Mutation = {
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyArgs = {
   condition?: InputMaybe<ModelColonyConditionInput>;
   input: CreateColonyInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyActionArgs = {
   condition?: InputMaybe<ModelColonyActionConditionInput>;
   input: CreateColonyActionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyExtensionArgs = {
   condition?: InputMaybe<ModelColonyExtensionConditionInput>;
   input: CreateColonyExtensionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyFundsClaimArgs = {
   condition?: InputMaybe<ModelColonyFundsClaimConditionInput>;
   input: CreateColonyFundsClaimInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyMetadataArgs = {
   condition?: InputMaybe<ModelColonyMetadataConditionInput>;
   input: CreateColonyMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateColonyTokensArgs = {
   condition?: InputMaybe<ModelColonyTokensConditionInput>;
   input: CreateColonyTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateContractEventArgs = {
   condition?: InputMaybe<ModelContractEventConditionInput>;
   input: CreateContractEventInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateCurrentVersionArgs = {
   condition?: InputMaybe<ModelCurrentVersionConditionInput>;
   input: CreateCurrentVersionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateDomainArgs = {
   condition?: InputMaybe<ModelDomainConditionInput>;
   input: CreateDomainInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateDomainMetadataArgs = {
   condition?: InputMaybe<ModelDomainMetadataConditionInput>;
   input: CreateDomainMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateProfileArgs = {
   condition?: InputMaybe<ModelProfileConditionInput>;
   input: CreateProfileInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateTokenArgs = {
   condition?: InputMaybe<ModelTokenConditionInput>;
   input: CreateTokenInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateUniqueColonyArgs = {
   input?: InputMaybe<CreateUniqueColonyInput>;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateUniqueUserArgs = {
   input?: InputMaybe<CreateUniqueUserInput>;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateUserArgs = {
   condition?: InputMaybe<ModelUserConditionInput>;
   input: CreateUserInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateUserTokensArgs = {
   condition?: InputMaybe<ModelUserTokensConditionInput>;
   input: CreateUserTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationCreateWatchedColoniesArgs = {
   condition?: InputMaybe<ModelWatchedColoniesConditionInput>;
   input: CreateWatchedColoniesInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyArgs = {
   condition?: InputMaybe<ModelColonyConditionInput>;
   input: DeleteColonyInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyActionArgs = {
   condition?: InputMaybe<ModelColonyActionConditionInput>;
   input: DeleteColonyActionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyExtensionArgs = {
   condition?: InputMaybe<ModelColonyExtensionConditionInput>;
   input: DeleteColonyExtensionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyFundsClaimArgs = {
   condition?: InputMaybe<ModelColonyFundsClaimConditionInput>;
   input: DeleteColonyFundsClaimInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyMetadataArgs = {
   condition?: InputMaybe<ModelColonyMetadataConditionInput>;
   input: DeleteColonyMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteColonyTokensArgs = {
   condition?: InputMaybe<ModelColonyTokensConditionInput>;
   input: DeleteColonyTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteContractEventArgs = {
   condition?: InputMaybe<ModelContractEventConditionInput>;
   input: DeleteContractEventInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteCurrentVersionArgs = {
   condition?: InputMaybe<ModelCurrentVersionConditionInput>;
   input: DeleteCurrentVersionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteDomainArgs = {
   condition?: InputMaybe<ModelDomainConditionInput>;
   input: DeleteDomainInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteDomainMetadataArgs = {
   condition?: InputMaybe<ModelDomainMetadataConditionInput>;
   input: DeleteDomainMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteProfileArgs = {
   condition?: InputMaybe<ModelProfileConditionInput>;
   input: DeleteProfileInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteTokenArgs = {
   condition?: InputMaybe<ModelTokenConditionInput>;
   input: DeleteTokenInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteUserArgs = {
   condition?: InputMaybe<ModelUserConditionInput>;
   input: DeleteUserInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteUserTokensArgs = {
   condition?: InputMaybe<ModelUserTokensConditionInput>;
   input: DeleteUserTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationDeleteWatchedColoniesArgs = {
   condition?: InputMaybe<ModelWatchedColoniesConditionInput>;
   input: DeleteWatchedColoniesInput;
 };
 
 
+/** Root mutation type. */
 export type MutationSetCurrentVersionArgs = {
   input?: InputMaybe<SetCurrentVersionInput>;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyArgs = {
   condition?: InputMaybe<ModelColonyConditionInput>;
   input: UpdateColonyInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyActionArgs = {
   condition?: InputMaybe<ModelColonyActionConditionInput>;
   input: UpdateColonyActionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyExtensionArgs = {
   condition?: InputMaybe<ModelColonyExtensionConditionInput>;
   input: UpdateColonyExtensionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyFundsClaimArgs = {
   condition?: InputMaybe<ModelColonyFundsClaimConditionInput>;
   input: UpdateColonyFundsClaimInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyMetadataArgs = {
   condition?: InputMaybe<ModelColonyMetadataConditionInput>;
   input: UpdateColonyMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateColonyTokensArgs = {
   condition?: InputMaybe<ModelColonyTokensConditionInput>;
   input: UpdateColonyTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateContractEventArgs = {
   condition?: InputMaybe<ModelContractEventConditionInput>;
   input: UpdateContractEventInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateCurrentVersionArgs = {
   condition?: InputMaybe<ModelCurrentVersionConditionInput>;
   input: UpdateCurrentVersionInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateDomainArgs = {
   condition?: InputMaybe<ModelDomainConditionInput>;
   input: UpdateDomainInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateDomainMetadataArgs = {
   condition?: InputMaybe<ModelDomainMetadataConditionInput>;
   input: UpdateDomainMetadataInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateExtensionByColonyAndHashArgs = {
   input?: InputMaybe<UpdateExtensionByColonyAndHashInput>;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateProfileArgs = {
   condition?: InputMaybe<ModelProfileConditionInput>;
   input: UpdateProfileInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateTokenArgs = {
   condition?: InputMaybe<ModelTokenConditionInput>;
   input: UpdateTokenInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateUserArgs = {
   condition?: InputMaybe<ModelUserConditionInput>;
   input: UpdateUserInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateUserTokensArgs = {
   condition?: InputMaybe<ModelUserTokensConditionInput>;
   input: UpdateUserTokensInput;
 };
 
 
+/** Root mutation type. */
 export type MutationUpdateWatchedColoniesArgs = {
   condition?: InputMaybe<ModelWatchedColoniesConditionInput>;
   input: UpdateWatchedColoniesInput;
 };
 
+/**
+ * Represents the status of a Colony's native token.
+ *
+ * Colonies can have different types of native tokens in various modes. Here we define some important properties that the dApp uses to enable or disable certain features or views. This is set when a Colony is created and can be changed later.
+ */
 export type NativeTokenStatus = {
   __typename?: 'NativeTokenStatus';
+  /** Whether the user has permissions to mint new tokens. */
   mintable?: Maybe<Scalars['Boolean']>;
+  /** Whether the native token can be unlocked. */
   unlockable?: Maybe<Scalars['Boolean']>;
+  /** Whether the native token is unlocked. */
   unlocked?: Maybe<Scalars['Boolean']>;
 };
 
+/**
+ * Input data for the status of a Colony's native token.
+ *
+ * Colonies can have different types of native tokens in various modes. Here we define some important properties that the dApp uses to enable or disable certain features or views. This is set when a Colony is created and can be changed later.
+ */
 export type NativeTokenStatusInput = {
+  /** Whether the native token is mintable. */
   mintable?: InputMaybe<Scalars['Boolean']>;
+  /** Whether the native token can be unlocked. */
   unlockable?: InputMaybe<Scalars['Boolean']>;
+  /** Whether the native token is unlocked. */
   unlocked?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Variants of supported Ethereum networks. */
 export enum Network {
+  /** Local development network using Ganache. */
   Ganache = 'GANACHE',
+  /** Gnosis Chain network. */
   Gnosis = 'GNOSIS',
+  /** Fork of Gnosis Chain for QA purposes. */
   Gnosisfork = 'GNOSISFORK',
+  /** Ethereum Goerli test network. */
   Goerli = 'GOERLI',
+  /** Ethereum Mainnet. */
   Mainnet = 'MAINNET'
 }
 
+/** Represents a user's profile within the Colony Network. */
 export type Profile = {
   __typename?: 'Profile';
+  /** URL of the user's avatar image. */
   avatar?: Maybe<Scalars['String']>;
+  /** User's bio information. */
   bio?: Maybe<Scalars['String']>;
   createdAt: Scalars['AWSDateTime'];
+  /** Display name of the user. */
   displayName?: Maybe<Scalars['String']>;
+  /** User's email address. */
   email?: Maybe<Scalars['AWSEmail']>;
+  /** Unique identifier for the user's profile. */
   id: Scalars['ID'];
+  /** User's location information. */
   location?: Maybe<Scalars['String']>;
+  /** Metadata associated with the user's profile. */
   meta?: Maybe<ProfileMetadata>;
+  /** URL of the user's thumbnail image. */
   thumbnail?: Maybe<Scalars['String']>;
   updatedAt: Scalars['AWSDateTime'];
+  /** URL of the user's website. */
   website?: Maybe<Scalars['AWSURL']>;
 };
 
+/** Input data to use when creating or changing a user profile */
 export type ProfileInput = {
+  /** The URL of the user's avatar image. */
   avatar?: InputMaybe<Scalars['String']>;
+  /** A short description or biography of the user. */
   bio?: InputMaybe<Scalars['String']>;
+  /** The display name of the user. */
   displayName?: InputMaybe<Scalars['String']>;
+  /** The user's email address. */
   email?: InputMaybe<Scalars['AWSEmail']>;
+  /** The unique identifier for the user profile. */
   id?: InputMaybe<Scalars['ID']>;
+  /** The user's location (e.g., city or country). */
   location?: InputMaybe<Scalars['String']>;
+  /** Any additional metadata or settings related to the user profile. */
   meta?: InputMaybe<ProfileMetadataInput>;
+  /** The URL of the user's thumbnail image. */
   thumbnail?: InputMaybe<Scalars['String']>;
+  /** The user's personal or professional website. */
   website?: InputMaybe<Scalars['AWSURL']>;
 };
 
+/** Represents metadata for a user's profile. Mostly user specific settings. */
 export type ProfileMetadata = {
   __typename?: 'ProfileMetadata';
+  /** List of email permissions for the user. */
   emailPermissions: Array<Scalars['String']>;
 };
 
+/** Input data for a user's profile metadata. */
 export type ProfileMetadataInput = {
+  /** List of email permissions for the user. */
   emailPermissions: Array<Scalars['String']>;
 };
 
+/** Root query type. */
 export type Query = {
   __typename?: 'Query';
   getActionsByColony?: Maybe<ModelColonyActionConnection>;
@@ -1855,18 +2250,23 @@ export type Query = {
   getDomain?: Maybe<Domain>;
   getDomainMetadata?: Maybe<DomainMetadata>;
   getExtensionByColonyAndHash?: Maybe<ModelColonyExtensionConnection>;
+  /** Fetch the list of members for a specific Colony. */
   getMembersForColony?: Maybe<MembersForColonyReturn>;
   getProfile?: Maybe<Profile>;
   getProfileByEmail?: Maybe<ModelProfileConnection>;
+  /** Retrieve a user's reputation within the top ??? domains of a Colony. */
   getReputationForTopDomains?: Maybe<GetReputationForTopDomainsReturn>;
   getToken?: Maybe<Token>;
   getTokenByAddress?: Maybe<ModelTokenConnection>;
+  /** Fetch a token's information from _everywhere_ ??? not sure what this means ???. */
   getTokenFromEverywhere?: Maybe<TokenFromEverywhereReturn>;
   getTokensByType?: Maybe<ModelTokenConnection>;
   getUser?: Maybe<User>;
   getUserByAddress?: Maybe<ModelUserConnection>;
   getUserByName?: Maybe<ModelUserConnection>;
+  /** Retrieve a user's reputation within a specific domain in a Colony. */
   getUserReputation?: Maybe<Scalars['String']>;
+  /** Retrieve a user's token balance for a specific token. */
   getUserTokenBalance?: Maybe<GetUserTokenBalanceReturn>;
   getUserTokens?: Maybe<UserTokens>;
   getWatchedColonies?: Maybe<WatchedColonies>;
@@ -1888,6 +2288,7 @@ export type Query = {
 };
 
 
+/** Root query type. */
 export type QueryGetActionsByColonyArgs = {
   colonyId: Scalars['ID'];
   createdAt?: InputMaybe<ModelStringKeyConditionInput>;
@@ -1898,16 +2299,19 @@ export type QueryGetActionsByColonyArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetColonyArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetColonyActionArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetColonyByAddressArgs = {
   filter?: InputMaybe<ModelColonyFilterInput>;
   id: Scalars['ID'];
@@ -1917,6 +2321,7 @@ export type QueryGetColonyByAddressArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetColonyByNameArgs = {
   filter?: InputMaybe<ModelColonyFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1926,6 +2331,7 @@ export type QueryGetColonyByNameArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetColonyByTypeArgs = {
   filter?: InputMaybe<ModelColonyFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1935,36 +2341,43 @@ export type QueryGetColonyByTypeArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetColonyExtensionArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetColonyFundsClaimArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetColonyMetadataArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetColonyTokensArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetContractEventArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetCurrentVersionArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetCurrentVersionByKeyArgs = {
   filter?: InputMaybe<ModelCurrentVersionFilterInput>;
   key: Scalars['String'];
@@ -1974,16 +2387,19 @@ export type QueryGetCurrentVersionByKeyArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetDomainArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetDomainMetadataArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetExtensionByColonyAndHashArgs = {
   colonyId: Scalars['ID'];
   filter?: InputMaybe<ModelColonyExtensionFilterInput>;
@@ -1994,16 +2410,19 @@ export type QueryGetExtensionByColonyAndHashArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetMembersForColonyArgs = {
   input?: InputMaybe<MembersForColonyInput>;
 };
 
 
+/** Root query type. */
 export type QueryGetProfileArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetProfileByEmailArgs = {
   email: Scalars['AWSEmail'];
   filter?: InputMaybe<ModelProfileFilterInput>;
@@ -2013,16 +2432,19 @@ export type QueryGetProfileByEmailArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetReputationForTopDomainsArgs = {
   input?: InputMaybe<GetReputationForTopDomainsInput>;
 };
 
 
+/** Root query type. */
 export type QueryGetTokenArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetTokenByAddressArgs = {
   filter?: InputMaybe<ModelTokenFilterInput>;
   id: Scalars['ID'];
@@ -2032,11 +2454,13 @@ export type QueryGetTokenByAddressArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetTokenFromEverywhereArgs = {
   input?: InputMaybe<TokenFromEverywhereArguments>;
 };
 
 
+/** Root query type. */
 export type QueryGetTokensByTypeArgs = {
   filter?: InputMaybe<ModelTokenFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2046,11 +2470,13 @@ export type QueryGetTokensByTypeArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetUserArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetUserByAddressArgs = {
   filter?: InputMaybe<ModelUserFilterInput>;
   id: Scalars['ID'];
@@ -2060,6 +2486,7 @@ export type QueryGetUserByAddressArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetUserByNameArgs = {
   filter?: InputMaybe<ModelUserFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2069,26 +2496,31 @@ export type QueryGetUserByNameArgs = {
 };
 
 
+/** Root query type. */
 export type QueryGetUserReputationArgs = {
   input?: InputMaybe<GetUserReputationInput>;
 };
 
 
+/** Root query type. */
 export type QueryGetUserTokenBalanceArgs = {
   input?: InputMaybe<GetUserTokenBalanceInput>;
 };
 
 
+/** Root query type. */
 export type QueryGetUserTokensArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryGetWatchedColoniesArgs = {
   id: Scalars['ID'];
 };
 
 
+/** Root query type. */
 export type QueryListColoniesArgs = {
   filter?: InputMaybe<ModelColonyFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2096,6 +2528,7 @@ export type QueryListColoniesArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListColonyActionsArgs = {
   filter?: InputMaybe<ModelColonyActionFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2103,6 +2536,7 @@ export type QueryListColonyActionsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListColonyExtensionsArgs = {
   filter?: InputMaybe<ModelColonyExtensionFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2110,6 +2544,7 @@ export type QueryListColonyExtensionsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListColonyFundsClaimsArgs = {
   filter?: InputMaybe<ModelColonyFundsClaimFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2117,6 +2552,7 @@ export type QueryListColonyFundsClaimsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListColonyMetadataArgs = {
   filter?: InputMaybe<ModelColonyMetadataFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2124,6 +2560,7 @@ export type QueryListColonyMetadataArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListColonyTokensArgs = {
   filter?: InputMaybe<ModelColonyTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2131,6 +2568,7 @@ export type QueryListColonyTokensArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListContractEventsArgs = {
   filter?: InputMaybe<ModelContractEventFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2138,6 +2576,7 @@ export type QueryListContractEventsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListCurrentVersionsArgs = {
   filter?: InputMaybe<ModelCurrentVersionFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2145,6 +2584,7 @@ export type QueryListCurrentVersionsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListDomainMetadataArgs = {
   filter?: InputMaybe<ModelDomainMetadataFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2152,6 +2592,7 @@ export type QueryListDomainMetadataArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListDomainsArgs = {
   filter?: InputMaybe<ModelDomainFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2159,6 +2600,7 @@ export type QueryListDomainsArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListProfilesArgs = {
   filter?: InputMaybe<ModelProfileFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2166,6 +2608,7 @@ export type QueryListProfilesArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListTokensArgs = {
   filter?: InputMaybe<ModelTokenFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2173,6 +2616,7 @@ export type QueryListTokensArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListUserTokensArgs = {
   filter?: InputMaybe<ModelUserTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2180,6 +2624,7 @@ export type QueryListUserTokensArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListUsersArgs = {
   filter?: InputMaybe<ModelUserFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2187,21 +2632,30 @@ export type QueryListUsersArgs = {
 };
 
 
+/** Root query type. */
 export type QueryListWatchedColoniesArgs = {
   filter?: InputMaybe<ModelWatchedColoniesFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
   nextToken?: InputMaybe<Scalars['String']>;
 };
 
+/** ???: what is this? */
 export type SetCurrentVersionInput = {
+  /** ??? */
   key: Scalars['String'];
+  /** ??? */
   version: Scalars['Int'];
 };
 
+/** Variants of sorting methods for a member list. */
 export enum SortingMethod {
+  /** Sort members by highest reputation. */
   ByHighestRep = 'BY_HIGHEST_REP',
+  /** Sort members by having fewer permissions. */
   ByLessPermissions = 'BY_LESS_PERMISSIONS',
+  /** Sort members by lowest reputation. */
   ByLowestRep = 'BY_LOWEST_REP',
+  /** Sort members by having more permissions. */
   ByMorePermissions = 'BY_MORE_PERMISSIONS'
 }
 
@@ -2479,23 +2933,34 @@ export type SubscriptionOnUpdateWatchedColoniesArgs = {
   filter?: InputMaybe<ModelSubscriptionWatchedColoniesFilterInput>;
 };
 
+/** Represents an ERC20-compatible token that is used by Colonies and users. */
 export type Token = {
   __typename?: 'Token';
+  /** URL of the token's avatar image (logo). */
   avatar?: Maybe<Scalars['String']>;
+  /** Metadata related to the chain of the token. */
   chainMetadata?: Maybe<ChainMetadata>;
   colonies?: Maybe<ModelColonyTokensConnection>;
+  /** Timestamp of the token model's creation in the database. */
   createdAt: Scalars['AWSDateTime'];
+  /** Decimal precision of the token. */
   decimals: Scalars['Int'];
+  /** Unique identifier for the token (contract address). */
   id: Scalars['ID'];
+  /** Name of the token. */
   name: Scalars['String'];
+  /** Symbol of the token. */
   symbol: Scalars['String'];
+  /** URL of the token's thumbnail image (Small logo). */
   thumbnail?: Maybe<Scalars['String']>;
+  /** Type of the token. See `TokenType` for more information */
   type?: Maybe<TokenType>;
   updatedAt: Scalars['AWSDateTime'];
   users?: Maybe<ModelUserTokensConnection>;
 };
 
 
+/** Represents an ERC20-compatible token that is used by Colonies and users. */
 export type TokenColoniesArgs = {
   filter?: InputMaybe<ModelColonyTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2504,6 +2969,7 @@ export type TokenColoniesArgs = {
 };
 
 
+/** Represents an ERC20-compatible token that is used by Colonies and users. */
 export type TokenUsersArgs = {
   filter?: InputMaybe<ModelUserTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2511,22 +2977,35 @@ export type TokenUsersArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
+/** Input data for fetching a token's information from _everywhere_ ??? I'm not sure what that means ???. */
 export type TokenFromEverywhereArguments = {
+  /** Address of the token on the blockchain. */
   tokenAddress: Scalars['String'];
 };
 
+/** ???: what is this? */
 export type TokenFromEverywhereReturn = {
   __typename?: 'TokenFromEverywhereReturn';
+  /** ??? */
   items?: Maybe<Array<Maybe<Token>>>;
 };
 
+/** Input type for specifying a Token. */
 export type TokenInput = {
+  /** Unique identifier for the Token. */
   id: Scalars['ID'];
 };
 
+/**
+ * Variants of different token types a Colony can use.
+ * As Colonies can use multiple tokens and even own tokens (BYOT), we need to differentiate.
+ */
 export enum TokenType {
+  /** The native token of the Chain used (e.g. ETH on mainnet or xDAI on Gnosis-Chain) */
   ChainNative = 'CHAIN_NATIVE',
+  /** A (ERC20-compatible) token that was deployed with Colony. It has a few more features, like minting through the Colony itself */
   Colony = 'COLONY',
+  /** An ERC20-compatible token */
   Erc20 = 'ERC20'
 }
 
@@ -2631,14 +3110,26 @@ export type UpdateDomainMetadataInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/**
+ * Input data for updating an extension's information within a Colony, based on the Colony ID and extension hash.
+ * The hash is generated like so: `keccak256(toUtf8Bytes(extensionName))`, where `extensionName` is the name of the extension contract file in the Colony Network
+ */
 export type UpdateExtensionByColonyAndHashInput = {
+  /** The unique identifier for the Colony. */
   colonyId: Scalars['ID'];
+  /** The hash of the extension to be updated. */
   hash: Scalars['String'];
+  /** The timestamp when the extension was installed. */
   installedAt?: InputMaybe<Scalars['AWSTimestamp']>;
+  /** The Ethereum address of the user who installed the extension. */
   installedBy?: InputMaybe<Scalars['String']>;
+  /** A flag to indicate whether the extension is deleted. */
   isDeleted?: InputMaybe<Scalars['Boolean']>;
+  /** A flag to indicate whether the extension is deprecated. */
   isDeprecated?: InputMaybe<Scalars['Boolean']>;
+  /** A flag to indicate whether the extension is initialized. */
   isInitialized?: InputMaybe<Scalars['Boolean']>;
+  /** The version of the extension. */
   version?: InputMaybe<Scalars['Int']>;
 };
 
@@ -2684,12 +3175,17 @@ export type UpdateWatchedColoniesInput = {
   userID?: InputMaybe<Scalars['ID']>;
 };
 
+/** Represents a User within the Colony Network. */
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['AWSDateTime'];
+  /** Unique identifier for the User (wallet address). */
   id: Scalars['ID'];
+  /** (Short) name of the User. */
   name: Scalars['String'];
+  /** Profile information of the User. */
   profile?: Maybe<Profile>;
+  /** Profile ID associated with the User. */
   profileId?: Maybe<Scalars['ID']>;
   tokens?: Maybe<ModelUserTokensConnection>;
   updatedAt: Scalars['AWSDateTime'];
@@ -2697,6 +3193,7 @@ export type User = {
 };
 
 
+/** Represents a User within the Colony Network. */
 export type UserTokensArgs = {
   filter?: InputMaybe<ModelUserTokensFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2705,6 +3202,7 @@ export type UserTokensArgs = {
 };
 
 
+/** Represents a User within the Colony Network. */
 export type UserWatchlistArgs = {
   filter?: InputMaybe<ModelWatchedColoniesFilterInput>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2712,9 +3210,12 @@ export type UserWatchlistArgs = {
   sortDirection?: InputMaybe<ModelSortDirection>;
 };
 
+/** A type representing a user's reputation within a domain. */
 export type UserDomainReputation = {
   __typename?: 'UserDomainReputation';
+  /** The integer ID of the Domain within the Colony. */
   domainId: Scalars['Int'];
+  /** The user's reputation within the domain, represented as a percentage. */
   reputationPercentage: Scalars['String'];
 };
 
@@ -2740,14 +3241,20 @@ export type WatchedColonies = {
   userID: Scalars['ID'];
 };
 
+/**
+ * Represents a watcher within the Colony Network.
+ *
+ * A watcher is a Colony member who doesn't have reputation.
+ */
 export type Watcher = {
   __typename?: 'Watcher';
+  /** User data associated with the watcher. */
   user?: Maybe<User>;
 };
 
-export type ColonyActionFragment = { __typename?: 'ColonyAction', id: string, type: ColonyActionType, blockNumber: number, initiatorAddress?: string | null, recipientAddress?: string | null, amount?: string | null, tokenAddress?: string | null, createdAt: string, newColonyVersion?: number | null, transactionHash: string, colonyAddress: string, initiatorUser?: { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null } | null, recipient?: { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null } | null, token?: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } | null, fromDomain?: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null, toDomain?: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null };
+export type ColonyActionFragment = { __typename?: 'ColonyAction', id: string, type: ColonyActionType, blockNumber: number, initiatorAddress?: string | null, recipientAddress?: string | null, amount?: string | null, tokenAddress?: string | null, createdAt: string, newColonyVersion?: number | null, transactionHash: string, colonyAddress: string, initiatorUser?: { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', id: string, createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null } | null, recipient?: { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', id: string, createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null } | null, token?: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } | null, fromDomain?: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null, toDomain?: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null };
 
-export type ColonyFragment = { __typename?: 'Colony', name: string, version: number, colonyAddress: string, nativeToken: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string }, status?: { __typename?: 'ColonyStatus', recovery?: boolean | null, nativeToken?: { __typename?: 'NativeTokenStatus', mintable?: boolean | null, unlockable?: boolean | null, unlocked?: boolean | null } | null } | null, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, tokens?: { __typename?: 'ModelColonyTokensConnection', items: Array<{ __typename?: 'ColonyTokens', token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> } | null, domains?: { __typename?: 'ModelDomainConnection', items: Array<{ __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null> } | null, balances?: { __typename?: 'ColonyBalances', items?: Array<{ __typename?: 'ColonyBalance', id: string, balance: string, domain: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null }, token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> | null } | null, fundsClaims?: { __typename?: 'ModelColonyFundsClaimConnection', items: Array<{ __typename?: 'ColonyFundsClaim', id: string, createdAtBlock: number, createdAt: string, amount: string, token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> } | null, chainFundsClaim?: { __typename?: 'ColonyChainFundsClaim', id: string, createdAtBlock: number, createdAt: string, amount: string } | null, watchers?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', user: { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, website?: string | null, thumbnail?: string | null } | null } } | null> } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null };
+export type ColonyFragment = { __typename?: 'Colony', name: string, version: number, colonyAddress: string, nativeToken: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string }, status?: { __typename?: 'ColonyStatus', recovery?: boolean | null, nativeToken?: { __typename?: 'NativeTokenStatus', mintable?: boolean | null, unlockable?: boolean | null, unlocked?: boolean | null } | null } | null, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, tokens?: { __typename?: 'ModelColonyTokensConnection', items: Array<{ __typename?: 'ColonyTokens', token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> } | null, domains?: { __typename?: 'ModelDomainConnection', items: Array<{ __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null } | null> } | null, balances?: { __typename?: 'ColonyBalances', items?: Array<{ __typename?: 'ColonyBalance', id: string, balance: string, domain: { __typename?: 'Domain', id: string, nativeId: number, isRoot: boolean, nativeFundingPotId: number, metadata?: { __typename?: 'DomainMetadata', name: string, color: DomainColor, description: string, changelog?: Array<{ __typename?: 'DomainMetadataChangelog', transactionHash: string, oldName: string, newName: string, oldColor: DomainColor, newColor: DomainColor, oldDescription: string, newDescription: string }> | null } | null }, token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> | null } | null, fundsClaims?: { __typename?: 'ModelColonyFundsClaimConnection', items: Array<{ __typename?: 'ColonyFundsClaim', id: string, createdAtBlock: number, createdAt: string, amount: string, token: { __typename?: 'Token', decimals: number, name: string, symbol: string, type?: TokenType | null, avatar?: string | null, thumbnail?: string | null, tokenAddress: string } } | null> } | null, chainFundsClaim?: { __typename?: 'ColonyChainFundsClaim', id: string, createdAtBlock: number, createdAt: string, amount: string } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null };
 
 export type WatchedColonyFragment = { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null };
 
@@ -2771,7 +3278,7 @@ export type TokenFragment = { __typename?: 'Token', decimals: number, name: stri
 
 export type UserTokenBalanceDataFragment = { __typename?: 'GetUserTokenBalanceReturn', balance?: string | null, inactiveBalance?: string | null, lockedBalance?: string | null, activeBalance?: string | null, pendingBalance?: string | null };
 
-export type UserFragment = { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null };
+export type UserFragment = { __typename?: 'User', name: string, walletAddress: string, profile?: { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null } | null, watchlist?: { __typename?: 'ModelWatchedColoniesConnection', items: Array<{ __typename?: 'WatchedColonies', id: string, createdAt: string, colony: { __typename?: 'Colony', name: string, colonyAddress: string, chainMetadata?: { __typename?: 'ChainMetadata', chainId?: number | null, network?: Network | null } | null, metadata?: { __typename?: 'ColonyMetadata', displayName: string, avatar?: string | null, thumbnail?: string | null, changelog?: Array<{ __typename?: 'ColonyMetadataChangelog', transactionHash: string, newDisplayName: string, oldDisplayName: string, hasAvatarChanged: boolean }> | null } | null } } | null> } | null };
 
 export type ProfileFragment = { __typename?: 'Profile', avatar?: string | null, bio?: string | null, displayName?: string | null, email?: string | null, location?: string | null, thumbnail?: string | null, website?: string | null };
 
