@@ -9,7 +9,7 @@ input AMPLIFY {
 # but I never could get it to work
 
 """
-Input data for fetching a token's information from _everywhere_ ??? I'm not sure what that means ???.
+Input data for fetching a token's information from DB or chain.
 """
 input TokenFromEverywhereArguments {
   """Address of the token on the blockchain."""
@@ -31,8 +31,7 @@ input MembersForColonyInput {
 }
 
 """
-Input data for creating a unique user within the Colony Network.
-??? I'm not really sure what unique means in this context, I would like to add an explanation here thought ???
+Input data for creating a unique user within the Colony Network. Use this instead of the automatically generated `CreateUserInput` input type.
 """
 input CreateUniqueUserInput {
   """Unique identifier for the user. This is the user's wallet address."""
@@ -44,12 +43,12 @@ input CreateUniqueUserInput {
 }
 
 """
-??? Not really sure what this is. It's also not used anywhere ???
+**Deprecated** Extra permissions for a user, stored during the registration process.
 """
 enum EmailPermissions {
   """Permission to send notifications to the user."""
   sendNotifications
-  """Permission to identify the user as a human (??? as opposed to a contract ???)."""
+  """Person is registered and solved the captcha, they can use gasless transactions."""
   isHuman
 }
 
@@ -62,8 +61,7 @@ input ProfileMetadataInput {
 }
 
 """
-Input data for relevant chain metadata of a Colony.
-??? I would like to explain why we need this but maybe that's too much info ???
+Input data for relevant chain metadata of a Colony (if applicable).
 """
 input ChainMetadataInput {
   """The network the Colony is deployed on."""
@@ -105,9 +103,7 @@ input ColonyStatusInput {
 }
 
 """
-Input data for creating a unique Colony within the Colony Network.
-
-??? I'm not really sure what unique means in this context, I would like to add an explanation here thought ???
+Input data for creating a unique Colony within the Colony Network. Use this instead of the automatically generated `CreateColonyInput` input type.
 """
 input CreateUniqueColonyInput {
   """Unique identifier for the Colony. This is the Colony's contract address."""
@@ -189,25 +185,27 @@ input UpdateExtensionByColonyAndHashInput {
 }
 
 """
-???: what is this?
+Input data to store the latest available version of the core Colony contract and available extensions
+
+The extension hash is generated like so: `keccak256(toUtf8Bytes(extensionName))`, where `extensionName` is the name of the extension contract file in the Colony Network (e.g. `VotingReputation`)
 """
 input SetCurrentVersionInput {
-  """???"""
+  """COLONY for the Colony contract, extension hash for extensions"""
   key: String!
-  """???"""
+  """Latest available version"""
   version: Int!
 }
 
 """
-???: what is this?
+Return type for tokens gotten from DB or from chain.
 """
 type TokenFromEverywhereReturn {
-  """???"""
+  """List of tokens found"""
   items: [Token]
 }
 
 """
-Input data for retrieving a user's reputation within the top ??? domains of a Colony.
+Input data for retrieving a user's reputation within the top domains of a Colony.
 """
 input GetReputationForTopDomainsInput {
   """The Ethereum wallet address of the user."""
@@ -248,9 +246,15 @@ type GetReputationForTopDomainsReturn {
 
 """
 A return type representing the breakdown of a user's token balance.
+
+Definitions:
+* Inactive: balance of a token that is in a users wallet but can't be used by the Colony Network (e.g. for governance)
+* Locked: balance of a token that is staked (e.g. in motions)
+* Active: balance that is approved for the Colony Network to use (e.g. for governance)
+* Pending: [needs input]
 """
 type GetUserTokenBalanceReturn {
-  """The total token balance, including inactive, locked, and active ??? and pending ??? balances."""
+  """The total token balance, including inactive, locked, and active balances."""
   balance: String
   """The inactive portion of the user's token balance."""
   inactiveBalance: String
@@ -363,7 +367,7 @@ These can all happen in a Colony and will be interpreted by the dApp according t
 enum ColonyActionType {
   """A generic or unspecified Colony action."""
   GENERIC
-  """ ??? """
+  """An action unrelated to the currently viewed Colony. """
   WRONG_COLONY
   """An action related to a payment within a Colony."""
   PAYMENT
@@ -407,11 +411,11 @@ enum SortingMethod {
 
 """Root query type."""
 type Query {
-  """Fetch a token's information from _everywhere_ ??? not sure what this means ???."""
+  """Fetch a token's information. Tries to get the data from the DB first, if that fails, resolves to get data from chain"""
   getTokenFromEverywhere(
     input: TokenFromEverywhereArguments
   ): TokenFromEverywhereReturn @function(name: "fetchTokenFromChain")
-  """Retrieve a user's reputation within the top ??? domains of a Colony."""
+  """Retrieve a user's reputation within the top domains of a Colony."""
   getReputationForTopDomains(
     input: GetReputationForTopDomainsInput
   ): GetReputationForTopDomainsReturn
@@ -432,13 +436,13 @@ type Query {
 Root mutation type.
 """
 type Mutation {
-  """Create a unique user within the Colony Network. ??? Maybe explain why unique ???"""
+  """Create a unique user within the Colony Network. Use this instead of the automatically generated `createUser` mutation"""
   createUniqueUser(input: CreateUniqueUserInput): User
     @function(name: "createUniqueUser")
-  """Create a unique Colony within the Colony Network. ??? Maybe explain why unique ???"""
+  """Create a unique Colony within the Colony Network. Use this instead of the automatically generate `createColony` mutation"""
   createUniqueColony(input: CreateUniqueColonyInput): Colony
     @function(name: "createUniqueColony")
-  """ ??? I don't know what this is ??? """
+  """Updates the latest available version of a Colony or an extension"""
   setCurrentVersion(input: SetCurrentVersionInput): Boolean
     @function(name: "setCurrentVersion")
   """
@@ -578,7 +582,7 @@ type Token @model {
 }
 
 """
-??? I'm not really sure what this is
+**Deprecated** Type for a unique identfier for a Colony
 """
 type ColonyID {
   """Unique identifier for the Colony."""
@@ -804,7 +808,7 @@ Represents a Colony balance for a specific domain and token.
 # you'd never actually be able to read that data since the return is overwritten
 # by the lambda function
 type ColonyBalance {
-  """Unique identifier for the Colony Balance. ??? Is this the colony address as well? ???"""
+  """**Deprecated** Unique identifier for the Colony Balance."""
   id: ID!
   """Balance of the specific token in the domain."""
   balance: String!
@@ -963,7 +967,7 @@ type ColonyAction @model {
   toDomainId: ID
   """The target Domain of the action, if applicable."""
   toDomain: Domain @hasOne(fields: ["toDomainId"])
-  """ ??? Not sure what this is ???"""
+  """[Needs input]"""
   fundamentalChainId: Int
   """The resulting new Colony version, if applicable."""
   newColonyVersion: Int
