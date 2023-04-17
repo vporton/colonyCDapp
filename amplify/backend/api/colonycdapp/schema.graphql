@@ -110,7 +110,7 @@ input CreateUniqueColonyInput {
   id: ID!
   """Display name of the Colony."""
   name: String!
-  """Unique identifier for the Colony's native token."""
+  """Unique identifier for the Colony's native token (this is its address)."""
   colonyNativeTokenId: ID!
   """Type of the Colony (regular or MetaColony)."""
   type: ColonyType
@@ -246,23 +246,29 @@ type GetReputationForTopDomainsReturn {
 
 """
 A return type representing the breakdown of a user's token balance.
-
-Definitions:
-* Inactive: balance of a token that is in a users wallet but can't be used by the Colony Network (e.g. for governance)
-* Locked: balance of a token that is staked (e.g. in motions)
-* Active: balance that is approved for the Colony Network to use (e.g. for governance)
-* Pending: [needs input]
 """
 type GetUserTokenBalanceReturn {
   """The total token balance, including inactive, locked, and active balances."""
   balance: String
-  """The inactive portion of the user's token balance."""
+  """
+  The inactive portion of the user's token balance.
+  This is the balance of a token that is in a users wallet but can't be used by the Colony Network (e.g. for governance).
+  """
   inactiveBalance: String
-  """The locked portion of the user's token balance."""
+  """
+  The locked portion of the user's token balance.
+  This is the balance of a token that is staked (e.g. in motions).
+  """
   lockedBalance: String
-  """The active portion of the user's token balance."""
+  """
+  The active portion of the user's token balance.
+  This is the balance that is approved for the Colony Network to use (e.g. for governance).
+  """
   activeBalance: String
-  """The pending portion of the user's token balance."""
+  """
+  The pending portion of the user's token balance.
+  These are tokens that have been sent to the wallet, but are inaccessible until all locks are cleared and then these tokens are claimed.
+  """
   pendingBalance: String
 }
 
@@ -582,14 +588,6 @@ type Token @model {
 }
 
 """
-**Deprecated** Type for a unique identfier for a Colony
-"""
-type ColonyID {
-  """Unique identifier for the Colony."""
-  id: ID!
-}
-
-"""
 Represents a Colony within the Colony Network.
 """
 type Colony @model {
@@ -655,6 +653,8 @@ type ColonyMetadata @model {
 
 """
 Represents a changelog entry for Colony metadata.
+
+This is used to traverse through the history of metadata values and consolidate them into a final state.
 """
 type ColonyMetadataChangelog {
   """Transaction hash associated with the changelog entry."""
@@ -808,7 +808,7 @@ Represents a Colony balance for a specific domain and token.
 # you'd never actually be able to read that data since the return is overwritten
 # by the lambda function
 type ColonyBalance {
-  """**Deprecated** Unique identifier for the Colony Balance."""
+  """Unique identifier for the Colony Balance."""
   id: ID!
   """Balance of the specific token in the domain."""
   balance: String!
@@ -967,7 +967,7 @@ type ColonyAction @model {
   toDomainId: ID
   """The target Domain of the action, if applicable."""
   toDomain: Domain @hasOne(fields: ["toDomainId"])
-  """[Needs input]"""
+  """The fundamental chain id"""
   fundamentalChainId: Int
   """The resulting new Colony version, if applicable."""
   newColonyVersion: Int
