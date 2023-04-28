@@ -80,8 +80,8 @@
   composes: main;
 
   & svg {
-    fill: red;
-    stroke: red;
+    fill: currentColor;
+    stroke: currentColor;
   }
 }
 
@@ -89,7 +89,7 @@
   composes: main;
 
   & svg {
-    fill: red;
-    stroke: red;
+    fill: currentColor;
+    stroke: currentColor;
   }
 }
