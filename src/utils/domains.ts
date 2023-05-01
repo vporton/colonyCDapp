@@ -47,14 +47,20 @@ export const getDomainOptions = (colonyDomains: Domain[]) =>
  */
 export const getDomainBalance = (
   nativeDomainId: number | string,
+  tokenAddress?: string | null,
   balances?: Colony['balances'] | null,
 ) => {
   const { balance } =
-    balances?.items
-      ?.filter(notNull)
-      .find(
-        ({ domain: { nativeId } }) => nativeId === Number(nativeDomainId),
-      ) || {};
+    balances?.items?.filter(notNull).find(({ domain, token }) => {
+      if (domain && token) {
+        return (
+          domain.nativeId === Number(nativeDomainId) &&
+          token.tokenAddress === tokenAddress
+        );
+      }
+
+      return undefined;
+    }) || {};
 
   return balance;
 };

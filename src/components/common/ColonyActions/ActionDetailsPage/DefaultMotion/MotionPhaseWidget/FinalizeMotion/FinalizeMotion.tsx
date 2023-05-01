@@ -38,6 +38,7 @@ const MSG = defineMessages({
 
 export interface FinalizeMotionProps {
   amount?: string | null;
+  tokenAddress?: string | null;
   motionData: MotionData;
   requiresDomainFunds: boolean;
   startPollingAction: (pollingInterval: number) => void;
@@ -46,6 +47,7 @@ export interface FinalizeMotionProps {
 
 const FinalizeMotion = ({
   amount,
+  tokenAddress,
   motionData: { motionDomainId, motionId },
   requiresDomainFunds,
   startPollingAction,
@@ -64,7 +66,11 @@ const FinalizeMotion = ({
     );
   }
 
-  const domainBalance = getDomainBalance(motionDomainId, balances);
+  const domainBalance = getDomainBalance(
+    motionDomainId,
+    tokenAddress,
+    balances,
+  );
 
   const isFinalizable =
     !requiresDomainFunds ||
