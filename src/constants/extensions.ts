@@ -9,6 +9,7 @@ export const MIN_SUPPORTED_COLONY_VERSION = 5;
 
 const oneTransactionPaymentName = 'extensions.OneTxPayment';
 const votingReputationName = 'extensions.votingReputation';
+const carbonName = 'extensions.carbon';
 
 const oneTransactionPaymentMessages = {
   oneTxPaymentName: {
@@ -124,9 +125,26 @@ const votingReputationMessages = {
   },
 };
 
+const carbonMessages = {
+  carbonName: {
+    id: `${carbonName}.name`,
+    defaultMessage: 'Carbon Accounting',
+  },
+  carbonDescriptionShort: {
+    id: `${carbonName}.description`,
+    defaultMessage: 'Account carbon tokens.',
+  },
+  carbonDescriptionLong: {
+    id: `${carbonName}.descriptionLong`,
+    defaultMessage:
+      'Account carbon tokens. Or can be used for accounting other things.',
+  },
+};
+
 const MSG = defineMessages({
   ...oneTransactionPaymentMessages,
   ...votingReputationMessages,
+  ...carbonMessages,
 });
 
 export const supportedExtensionsConfig: ExtensionConfig[] = [
@@ -292,5 +310,14 @@ export const supportedExtensionsConfig: ExtensionConfig[] = [
     ],
     uninstallable: true,
     createdAt: 1603915271852,
+  },
+  {
+    extensionId: Extension.carbon,
+    name: MSG.carbonName,
+    descriptionShort: MSG.carbonDescriptionShort,
+    descriptionLong: MSG.carbonDescriptionLong,
+    neededColonyPermissions: [],
+    uninstallable: true,
+    createdAt: 1683397470000,
   },
 ];
