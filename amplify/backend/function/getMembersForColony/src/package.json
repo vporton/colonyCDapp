@@ -11,6 +11,6 @@
     "@colony/colony-js": "^6.1.0",
     "decimal.js": "^10.2.1",
     "ethers": "^5.7.1",
-    "node-fetch": "2.6.7"
+    "node-fetch": "2.7.0"
   }
 }
