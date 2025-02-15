@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "aws-amplify": "^4.3.43",
-    "ethers": "^5.7.2"
+    "ethers": "^6.0.0"
   }
 }
