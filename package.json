@@ -158,7 +158,7 @@
     "image-blob-reduce": "^4.1.0",
     "immutable": "^4.1.0",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "move-decimal-point": "^0.0.4",
     "nanoid": "^3.1.31",
     "node-fetch": "^2.6.7",
